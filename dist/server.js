@@ -22,7 +22,7 @@ class App {
 
    routes() 
   {
-    this.express.use("/affiliate", _AffiliateRoutes2.default);
+    this.express.use("/affiliates", _AffiliateRoutes2.default);
   }
 }
 

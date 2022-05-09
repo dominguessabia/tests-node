@@ -1,5 +1,4 @@
 import database from "../../db";
-import { Request, Response } from "express";
 import Affiliate from "../models/Affiliate";
 
 
@@ -9,42 +8,47 @@ class AffiliateRepository {
     {
         try {
             database.authenticate();
-            console.log('A conexão estabelecida!');
+            console.log('A conexão foi estabelecida!');
         } catch (error) {
             console.error('Falha na conexão:', error);
         }
     }
 
-    public async getAll()
+    public async findAll()
     {
         await database.sync();
 
-        const affiliates = await Affiliate.findAll();        
+        return await Affiliate.findAll();
+    }
 
-        return affiliates;
+    public async findByCpf(value: number)
+    {
+        await database.sync();
+
+        return await Affiliate.findAll({
+            where: {
+              cpf: value
+            }
+        });
     }
     
-    public async create(req: Request)
+    public async create(body: any)
     {
+        await database.sync();
+
         return await Affiliate.create(
             {
-                cpf: req.body.cpf,
-                name: req.body.name,
-                email: req.body.email,
-                telefone: req.body.telefone,
-                como_soube: req.body.como_soube
+                cpf: body.cpf,
+                name: body.name,
+                email: body.email,
+                telefone: body.telefone,
+                como_soube: body.como_soube
             }
         ).then((e) => {
-            console.log(e);
-            return {
-                "message": "Registro feito!"
-            };
+            return "Registro feito!";
 
         }).catch((e) => {
-            console.log(e);
-            return {
-                "message": "Houve uma falha, verifique com administrador!"
-            };
+            return "Houve uma falha, verifique com administrador!";
         });
     }
 }

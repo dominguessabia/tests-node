@@ -1,18 +1,33 @@
 import { Request, Response } from "express";
-import AffiliateRepository from "../repositories/AffiliateRepository";
+import { findAllStudents, checkIsStudentByCpf, registerStudent } from "../services/AffiliateService";
 
 class AffiliateController {
 
     public async index(req: Request, res: Response):Promise<Response> 
     {
-        const affiliates = await AffiliateRepository.getAll();        
-        return res.json(affiliates);
+        let students = await findAllStudents();
+        return res.json(students);
+    }
+
+    public async verifyPerson(req: Request, res: Response):Promise<Response> 
+    {
+        let status = await checkIsStudentByCpf(req.body.cpf);
+        return res.json({
+            active: status
+        });
     }
 
     public async create(req: Request, res: Response):Promise<Response> 
     {
-        const lead = await AffiliateRepository.create(req);
-        return res.json(lead);
+        let msm = await registerStudent(req.body);
+        return res.json({
+            message: msm
+        });
+    }
+
+    public async converted(req: Request, res: Response):Promise<Response> 
+    {
+        return res.json(0);
     }
 }
 

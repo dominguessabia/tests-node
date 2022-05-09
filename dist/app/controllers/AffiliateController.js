@@ -1,46 +1,33 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var _db = require('../../db'); var _db2 = _interopRequireDefault(_db);
-var _Affiliate = require('../models/Affiliate'); var _Affiliate2 = _interopRequireDefault(_Affiliate);
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});
+var _AffiliateService = require('../services/AffiliateService');
 
 class AffiliateController {
 
-     constructor()
-    {
-        try {
-            _db2.default.authenticate();
-            console.log('A conexão estabelecida!');
-        } catch (error) {
-            console.error('Falha na conexão:', error);
-        }
-    }
-
      async index(req, res) 
     {
-        // const affiliate = new Affiliate; 
-        await _db2.default.sync();
-        const affiliates = await _Affiliate2.default.findAll();
-
-        return res.json(affiliates);
+        let students = await _AffiliateService.findAllStudents.call(void 0, );
+        return res.json(students);
     }
 
-     async register(req, res) 
+     async verifyPerson(req, res) 
     {
-        await _db2.default.sync();
-
-        const newRegister = await _Affiliate2.default.create({
-            cpf: req.body.cpf,
-            name: req.body.name,
-            email: req.body.email,
-            telefone: req.body.telefone,
-            como_soube: req.body.como_soube
-        
-        }).then((affiliate) => {
-            return res.json("Registro feito!");
-
-        }).catch((e) => {
-            console.log(e);
-            return res.json("Houve uma falha, verifique com administrador!");
+        let status = await _AffiliateService.checkIsStudentByCpf.call(void 0, req.body.cpf);
+        return res.json({
+            active: status
         });
+    }
+
+     async create(req, res) 
+    {
+        let msm = await _AffiliateService.registerStudent.call(void 0, req.body);
+        return res.json({
+            message: msm
+        });
+    }
+
+     async converted(req, res) 
+    {
+        return res.json(0);
     }
 }
 
