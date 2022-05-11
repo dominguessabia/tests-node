@@ -23,6 +23,7 @@ class App {
   private routes(): void 
   {
     this.express.use("/affiliates", AffiliateRoutes);
+    
   }
 }
 
