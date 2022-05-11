@@ -17,7 +17,7 @@ class App {
   {
     this.express.use(_express2.default.json());
     this.express.use(_cors2.default.call(void 0, ));
-    this.express.listen(3000);
+    this.express.listen(8080);
   }
 
    routes() 

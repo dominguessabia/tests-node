@@ -17,7 +17,7 @@ class App {
   {
     this.express.use(express.json());
     this.express.use(cors());
-    this.express.listen(3000);
+    this.express.listen(8080);
   }
 
   private routes(): void 

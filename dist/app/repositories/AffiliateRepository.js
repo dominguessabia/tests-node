@@ -1,55 +1,36 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _db = require('../../db'); var _db2 = _interopRequireDefault(_db);
-var _Affiliate = require('../models/Affiliate'); var _Affiliate2 = _interopRequireDefault(_Affiliate);
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 
 class AffiliateRepository {
 
      constructor()
     {
-        try {
-            _db2.default.authenticate();
-            console.log('A conexão foi estabelecida!');
-        } catch (error) {
-            console.error('Falha na conexão:', error);
-        }
+        console.log('FILE: AffiliateRepository');
     }
 
      async findAll()
     {
-        await _db2.default.sync();
+        let data = [
+            {
+                "cpf": 1234,
+                "name": "Guilherme Alves",
+                "email": "guilherme.alves@gmail.com",
+                "telefone": 11989482099,
+                "como_soube": "Google"
+            }
+        ];
 
-        return await _Affiliate2.default.findAll();
+        return data;
     }
 
      async findByCpf(value)
     {
-        await _db2.default.sync();
-
-        return await _Affiliate2.default.findAll({
-            where: {
-              cpf: value
-            }
-        });
+        return [{}];
     }
     
      async create(body)
     {
-        await _db2.default.sync();
-
-        return await _Affiliate2.default.create(
-            {
-                cpf: body.cpf,
-                name: body.name,
-                email: body.email,
-                telefone: body.telefone,
-                como_soube: body.como_soube
-            }
-        ).then((e) => {
-            return "Registro feito!";
-
-        }).catch((e) => {
-            return "Houve uma falha, verifique com administrador!";
-        });
+        return "Registro feito!";
     }
 }
 
